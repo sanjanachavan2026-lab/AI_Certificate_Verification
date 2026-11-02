@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Certificate Verification</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
+
+    <div class="background">
+
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                AI
+            </div>
+
+            <span>
+                Certi<span>Verify</span>
+            </span>
+
+        </div>
+
+
+        <div class="nav-status">
+
+            <span class="status-dot"></span>
+
+            AI System Online
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+        <section class="hero">
+
+
+            <!-- Badge -->
+
+            <div class="badge">
+
+                ✦ AI-POWERED CERTIFICATE VERIFICATION
+
+            </div>
+
+
+            <!-- Heading -->
+
+            <h1>
+
+                Verify Any
+                <span>Certificate</span>
+
+                <br>
+
+                in Seconds
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                Upload a certificate and let our AI system
+                extract, analyze and verify its information
+                against trusted records.
+
+            </p>
+
+
+            <!-- =================================================
+                 UPLOAD CARD
+            ================================================== -->
+
+            <div class="upload-card">
+
+
+                <div class="upload-header">
+
+                    <div>
+
+                        <h2>
+                            Upload Certificate
+                        </h2>
+
+                        <p>
+                            Supported documents and image formats
+                        </p>
+
+                    </div>
+
+
+                    <div class="shield">
+
+                        🛡
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     FORM
+                ================================================== -->
+
+                <form
+                    action="/verify"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    id="certificateForm">
+
+
+                    <!-- Drop Zone -->
+
+                    <div
+                        class="drop-zone"
+                        id="dropZone">
+
+
+                        <div class="upload-icon">
+
+                            <div class="upload-icon-inner">
+                                ↑
+                            </div>
+
+                        </div>
+
+
+                        <h3>
+                            Drag & Drop your certificate
+                        </h3>
+
+
+                        <p>
+
+                            or
+
+                            <label for="certificate">
+                                browse files
+                            </label>
+
+                        </p>
+
+
+                        <span class="file-types">
+
+                            Supported formats:
+                            PDF, JPG, JPEG, PNG
+
+                            <br>
+
+                            Maximum file size: 10 MB
+
+                        </span>
+
+
+                        <!-- IMPORTANT:
+                             PDF + JPG + JPEG + PNG -->
+
+                        <input
+                            type="file"
+                            id="certificate"
+                            name="certificate"
+                            accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                            hidden
+                            required>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         FILE PREVIEW
+                    ================================================== -->
+
+                    <div
+                        class="file-preview"
+                        id="filePreview">
+
+
+                        <div class="file-icon"
+                             id="fileIcon">
+
+                            📄
+
+                        </div>
+
+
+                        <div class="file-info">
+
+                            <strong id="fileName">
+                                Certificate
+                            </strong>
+
+                            <span id="fileSize">
+                                0 KB
+                            </span>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            id="removeFile"
+                            title="Remove file">
+
+                            ×
+
+                        </button>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         VERIFY BUTTON
+                    ================================================== -->
+
+                    <button
+                        type="submit"
+                        class="verify-btn"
+                        id="verifyBtn"
+                        disabled>
+
+                        Verify Certificate
+
+                        <span class="arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 FEATURES
+            ================================================== -->
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ◉
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            AI OCR
+                        </strong>
+
+                        <p>
+                            Smart text extraction
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Smart Verification
+                        </strong>
+
+                        <p>
+                            Intelligent matching
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🔒
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Secure
+                        </strong>
+
+                        <p>
+                            Safe document processing
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <span>
+            AI Certificate Verification System
+        </span>
+
+        <span>
+            © 2026 CertiVerify
+        </span>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        const dropZone =
+            document.getElementById("dropZone");
+
+
+        const certificateInput =
+            document.getElementById("certificate");
+
+
+        const filePreview =
+            document.getElementById("filePreview");
+
+
+        const fileName =
+            document.getElementById("fileName");
+
+
+        const fileSize =
+            document.getElementById("fileSize");
+
+
+        const fileIcon =
+            document.getElementById("fileIcon");
+
+
+        const removeFile =
+            document.getElementById("removeFile");
+
+
+        const verifyBtn =
+            document.getElementById("verifyBtn");
+
+
+        const certificateForm =
+            document.getElementById("certificateForm");
+
+
+        /* =====================================================
+           ALLOWED FILE TYPES
+        ====================================================== */
+
+        const allowedTypes = [
+
+            "application/pdf",
+
+            "image/jpeg",
+
+            "image/png"
+
+        ];
+
+
+        const allowedExtensions = [
+
+            ".pdf",
+
+            ".jpg",
+
+            ".jpeg",
+
+            ".png"
+
+        ];
+
+
+        const maxFileSize =
+            10 * 1024 * 1024;
+
+
+        /* =====================================================
+           FILE VALIDATION
+        ====================================================== */
+
+        function validateFile(file) {
+
+
+            if (!file) {
+
+                return false;
+
+            }
+
+
+            const fileNameLower =
+                file.name.toLowerCase();
+
+
+            const extension =
+                fileNameLower.substring(
+                    fileNameLower.lastIndexOf(".")
+                );
+
+
+            const validType =
+                allowedTypes.includes(file.type);
+
+
+            const validExtension =
+                allowedExtensions.includes(
+                    extension
+                );
+
+
+            if (!validType && !validExtension) {
+
+                alert(
+                    "Invalid file format.\n\n" +
+                    "Please upload a PDF, JPG, JPEG or PNG certificate."
+                );
+
+                return false;
+
+            }
+
+
+            if (file.size > maxFileSize) {
+
+                alert(
+                    "File is too large.\n\n" +
+                    "Maximum allowed size is 10 MB."
+                );
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+
+
+        /* =====================================================
+           FORMAT FILE SIZE
+        ====================================================== */
+
+        function formatFileSize(bytes) {
+
+            if (bytes < 1024) {
+
+                return bytes + " Bytes";
+
+            }
+
+
+            if (bytes < 1024 * 1024) {
+
+                return (
+                    (bytes / 1024).toFixed(1)
+                    + " KB"
+                );
+
+            }
+
+
+            return (
+                (bytes / (1024 * 1024)).toFixed(2)
+                + " MB"
+            );
+
+        }
+
+
+        /* =====================================================
+           UPDATE FILE PREVIEW
+        ====================================================== */
+
+        function updateFile(file) {
+
+
+            if (!validateFile(file)) {
+
+                certificateInput.value = "";
+
+                return;
+
+            }
+
+
+            fileName.textContent =
+                file.name;
+
+
+            fileSize.textContent =
+                formatFileSize(file.size);
+
+
+            const extension =
+                file.name
+                .toLowerCase()
+                .split(".")
+                .pop();
+
+
+            /* PDF */
+
+            if (extension === "pdf") {
+
+                fileIcon.textContent = "📕";
+
+            }
+
+            /* Image */
+
+            else {
+
+                fileIcon.textContent = "🖼️";
+
+            }
+
+
+            filePreview.classList.add(
+                "active"
+            );
+
+
+            dropZone.classList.add(
+                "selected"
+            );
+
+
+            verifyBtn.disabled = false;
+
+
+            verifyBtn.style.opacity = "1";
+
+        }
+
+
+        /* =====================================================
+           FILE INPUT CHANGE
+        ====================================================== */
+
+        certificateInput.addEventListener(
+            "change",
+            function () {
+
+                if (this.files.length > 0) {
+
+                    updateFile(
+                        this.files[0]
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           CLICK DROP ZONE
+        ====================================================== */
+
+        dropZone.addEventListener(
+            "click",
+            function (event) {
+
+                /*
+                 * Don't reopen file chooser when
+                 * clicking the hidden input area.
+                 */
+
+                if (
+                    event.target.tagName === "LABEL"
+                ) {
+
+                    return;
+
+                }
+
+
+                certificateInput.click();
+
+            }
+        );
+
+
+        /* =====================================================
+           DRAG OVER
+        ====================================================== */
+
+        dropZone.addEventListener(
+            "dragover",
+            function (event) {
+
+                event.preventDefault();
+
+                dropZone.classList.add(
+                    "dragging"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           DRAG LEAVE
+        ====================================================== */
+
+        dropZone.addEventListener(
+            "dragleave",
+            function () {
+
+                dropZone.classList.remove(
+                    "dragging"
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           DROP
+        ====================================================== */
+
+        dropZone.addEventListener(
+            "drop",
+            function (event) {
+
+                event.preventDefault();
+
+
+                dropZone.classList.remove(
+                    "dragging"
+                );
+
+
+                const files =
+                    event.dataTransfer.files;
+
+
+                if (!files.length) {
+
+                    return;
+
+                }
+
+
+                const file =
+                    files[0];
+
+
+                if (!validateFile(file)) {
+
+                    return;
+
+                }
+
+
+                /*
+                 * Put dropped file into
+                 * file input.
+                 */
+
+                try {
+
+                    const dataTransfer =
+                        new DataTransfer();
+
+                    dataTransfer.items.add(
+                        file
+                    );
+
+                    certificateInput.files =
+                        dataTransfer.files;
+
+                }
+
+                catch (error) {
+
+                    console.log(
+                        "DataTransfer not supported"
+                    );
+
+                }
+
+
+                updateFile(file);
+
+            }
+        );
+
+
+        /* =====================================================
+           REMOVE FILE
+        ====================================================== */
+
+        removeFile.addEventListener(
+            "click",
+            function () {
+
+                certificateInput.value = "";
+
+
+                filePreview.classList.remove(
+                    "active"
+                );
+
+
+                dropZone.classList.remove(
+                    "selected"
+                );
+
+
+                verifyBtn.disabled = true;
+
+            }
+        );
+
+
+        /* =====================================================
+           FORM SUBMIT
+        ====================================================== */
+
+        certificateForm.addEventListener(
+            "submit",
+            function (event) {
+
+
+                if (
+                    !certificateInput.files.length
+                ) {
+
+                    event.preventDefault();
+
+
+                    alert(
+                        "Please select a certificate first."
+                    );
+
+
+                    return;
+
+                }
+
+
+                const file =
+                    certificateInput.files[0];
+
+
+                if (!validateFile(file)) {
+
+                    event.preventDefault();
+
+                    return;
+
+                }
+
+
+                /*
+                 * Loading state
+                 */
+
+                verifyBtn.disabled = true;
+
+
+                verifyBtn.innerHTML = `
+
+                    <span>
+                        Analyzing Certificate...
+                    </span>
+
+                    <span class="arrow">
+                        ⟳
+                    </span>
+
+                `;
+
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Verification Result | CertiVerify</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+    <!-- Animated Background -->
+
+    <div class="background">
+
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
+
+    </div>
+
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                AI
+            </div>
+
+            <span>
+                Certi<span>Verify</span>
+            </span>
+
+        </div>
+
+
+        <div class="nav-status">
+
+            <span class="status-dot"></span>
+
+            AI System Online
+
+        </div>
+
+    </nav>
+
+
+    <!-- Main Result -->
+
+    <main class="result-main">
+
+
+        <!-- =================================================
+             RESULT HEADER
+        ================================================== -->
+
+        <div class="result-header">
+
+
+            {% if result.status == "VERIFIED" %}
+
+                <div class="result-icon verified-icon">
+                    ✓
+                </div>
+
+                <div class="result-badge verified-badge">
+                    VERIFIED
+                </div>
+
+                <h1>
+                    Certificate Verified
+                </h1>
+
+                <p>
+                    The uploaded certificate information
+                    strongly matches a registered certificate record.
+                </p>
+
+
+            {% elif result.status == "NEEDS REVIEW" %}
+
+                <div class="result-icon review-icon">
+                    !
+                </div>
+
+                <div class="result-badge review-badge">
+                    NEEDS REVIEW
+                </div>
+
+                <h1>
+                    Manual Review Recommended
+                </h1>
+
+                <p>
+                    Some certificate information matches,
+                    but there is not enough evidence for automatic verification.
+                </p>
+
+
+            {% else %}
+
+                <div class="result-icon invalid-icon">
+                    ?
+                </div>
+
+                <div class="result-badge invalid-badge">
+                    UNABLE TO VERIFY
+                </div>
+
+                <h1>
+                    Certificate Could Not Be Verified
+                </h1>
+
+                <p>
+                    We could not find enough trusted information
+                    to verify this certificate automatically.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =================================================
+             SCORE CARD
+        ================================================== -->
+
+        <div class="score-card">
+
+
+            <div class="score-left">
+
+                <span class="score-label">
+                    AI MATCH SCORE
+                </span>
+
+
+                <div class="score-number">
+
+                    <span id="score">
+                        0
+                    </span>
+
+                    <small>%</small>
+
+                </div>
+
+
+                <p>
+                    Based on OCR and certificate information similarity
+                </p>
+
+            </div>
+
+
+            <!-- Circular Score -->
+
+            <div class="score-circle">
+
+                <svg
+                    width="150"
+                    height="150"
+                    viewBox="0 0 150 150">
+
+                    <circle
+                        class="circle-bg"
+                        cx="75"
+                        cy="75"
+                        r="60">
+                    </circle>
+
+
+                    <circle
+                        class="circle-progress"
+                        cx="75"
+                        cy="75"
+                        r="60"
+                        id="progressCircle">
+                    </circle>
+
+                </svg>
+
+
+                <div class="circle-content">
+
+                    <span id="circleScore">
+                        0
+                    </span>
+
+                    <small>
+                        MATCH
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             REASON
+        ================================================== -->
+
+        <div class="reason-card">
+
+            <div class="reason-icon">
+
+                {% if result.status == "VERIFIED" %}
+                    ✓
+                {% elif result.status == "NEEDS REVIEW" %}
+                    !
+                {% else %}
+                    i
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Verification Result
+                </strong>
+
+                <p>
+                    {{ result.reason }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             DETECTED CERTIFICATE INFORMATION
+        ================================================== -->
+
+        <div class="details-card">
+
+
+            <div class="card-title">
+
+                <div class="title-icon">
+                    ◈
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Detected Certificate Information
+                    </h2>
+
+                    <p>
+                        Information extracted from the uploaded certificate
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-grid">
+
+
+                <!-- Name -->
+
+                <div class="detail-item">
+
+                    <span>
+                        Candidate Name
+                    </span>
+
+
+                    {% if certificate_info.name %}
+
+                        <strong>
+                            {{ certificate_info.name }}
+                        </strong>
+
+                        <small class="field-detected">
+                            ✓ Detected
+                        </small>
+
+                    {% else %}
+
+                        <strong class="not-detected">
+                            Not Detected
+                        </strong>
+
+                        <small class="field-missing">
+                            Not available in certificate
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Certificate ID -->
+
+                <div class="detail-item">
+
+                    <span>
+                        Certificate ID
+                    </span>
+
+
+                    {% if certificate_info.certificate_id %}
+
+                        <strong>
+                            {{ certificate_info.certificate_id }}
+                        </strong>
+
+                        <small class="field-detected">
+                            ✓ Detected
+                        </small>
+
+                    {% else %}
+
+                        <strong class="not-detected">
+                            Not Detected
+                        </strong>
+
+                        <small class="field-missing">
+                            No certificate number detected
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Issuer -->
+
+                <div class="detail-item">
+
+                    <span>
+                        Issuing Organization
+                    </span>
+
+
+                    {% if certificate_info.issuer %}
+
+                        <strong>
+                            {{ certificate_info.issuer }}
+                        </strong>
+
+                        <small class="field-detected">
+                            ✓ Detected
+                        </small>
+
+                    {% else %}
+
+                        <strong class="not-detected">
+                            Not Detected
+                        </strong>
+
+                        <small class="field-missing">
+                            Issuer not detected
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Certificate Type -->
+
+                <div class="detail-item">
+
+                    <span>
+                        Certificate Type
+                    </span>
+
+
+                    <strong>
+
+                        {{ certificate_info.certificate_type }}
+
+                    </strong>
+
+
+                    {% if certificate_info.certificate_type != "Other" %}
+
+                        <small class="field-detected">
+                            ✓ Identified
+                        </small>
+
+                    {% else %}
+
+                        <small class="field-missing">
+                            General certificate
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Course/Event -->
+
+                <div class="detail-item">
+
+                    <span>
+                        Course / Event
+                    </span>
+
+
+                    {% if certificate_info.course_or_event %}
+
+                        <strong>
+                            {{ certificate_info.course_or_event }}
+                        </strong>
+
+                        <small class="field-detected">
+                            ✓ Detected
+                        </small>
+
+                    {% else %}
+
+                        <strong class="not-detected">
+                            Not Detected
+                        </strong>
+
+                        <small class="field-missing">
+                            Course or event not detected
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Issue Date -->
+
+                <div class="detail-item">
+
+                    <span>
+                        Issue Date
+                    </span>
+
+
+                    {% if certificate_info.issue_date %}
+
+                        <strong>
+                            {{ certificate_info.issue_date }}
+                        </strong>
+
+                        <small class="field-detected">
+                            ✓ Detected
+                        </small>
+
+                    {% else %}
+
+                        <strong class="not-detected">
+                            Not Detected
+                        </strong>
+
+                        <small class="field-missing">
+                            Date not detected
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             VERIFICATION ANALYSIS
+        ================================================== -->
+
+        <div class="process-card">
+
+
+            <div class="card-title">
+
+                <div class="title-icon">
+                    ✦
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Verification Analysis
+                    </h2>
+
+                    <p>
+                        AI verification process
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="process-list">
+
+
+                <!-- OCR -->
+
+                <div class="process-item completed">
+
+                    <div class="process-number">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            OCR Text Extraction
+                        </strong>
+
+                        <p>
+                            Certificate text successfully extracted
+                        </p>
+
+                    </div>
+
+
+                    <span class="process-status">
+                        Complete
+                    </span>
+
+                </div>
+
+
+                <div class="process-line"></div>
+
+
+                <!-- Classification -->
+
+                <div class="process-item completed">
+
+                    <div class="process-number">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Certificate Classification
+                        </strong>
+
+                        <p>
+                            Certificate type identified as
+                            {{ certificate_info.certificate_type }}
+                        </p>
+
+                    </div>
+
+
+                    <span class="process-status">
+                        Complete
+                    </span>
+
+                </div>
+
+
+                <div class="process-line"></div>
+
+
+                <!-- Information Extraction -->
+
+                <div class="process-item completed">
+
+                    <div class="process-number">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Information Extraction
+                        </strong>
+
+                        <p>
+                            Candidate and certificate details extracted
+                        </p>
+
+                    </div>
+
+
+                    <span class="process-status">
+                        Complete
+                    </span>
+
+                </div>
+
+
+                <div class="process-line"></div>
+
+
+                <!-- Database Verification -->
+
+                <div class="process-item">
+
+
+                    {% if result.status == "VERIFIED" %}
+
+                        <div class="process-number">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Database Verification
+                            </strong>
+
+                            <p>
+                                Registered certificate record matched
+                            </p>
+
+                        </div>
+
+                        <span class="process-status">
+                            Matched
+                        </span>
+
+
+                    {% elif result.status == "NEEDS REVIEW" %}
+
+                        <div class="process-number review-number">
+                            !
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Database Verification
+                            </strong>
+
+                            <p>
+                                Partial information match detected
+                            </p>
+
+                        </div>
+
+                        <span class="process-status review-status">
+                            Review
+                        </span>
+
+
+                    {% else %}
+
+                        <div class="process-number not-matched">
+                            —
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Database Verification
+                            </strong>
+
+                            <p>
+                                No reliable registered record found
+                            </p>
+
+                        </div>
+
+                        <span class="process-status not-matched-text">
+                            No Match
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             OCR TEXT
+        ================================================== -->
+
+        <div class="ocr-card">
+
+
+            <div class="card-title">
+
+                <div class="title-icon">
+                    Aa
+                </div>
+
+
+                <div>
+
+                    <h2>
+                        Extracted Certificate Text
+                    </h2>
+
+                    <p>
+                        Raw text detected by the OCR engine
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="ocr-box">
+
+                {{ extracted_text }}
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ACTION
+        ================================================== -->
+
+        <div class="result-actions">
+
+            <a
+                href="/"
+                class="secondary-btn">
+
+                ← Verify Another Certificate
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             DISCLAIMER
+        ================================================== -->
+
+        <div class="disclaimer">
+
+            <span>
+                ⓘ
+            </span>
+
+
+            <p>
+
+                This AI system provides automated certificate
+                verification assistance based on OCR extraction,
+                information analysis and registered records.
+                "Unable to Verify" does not necessarily mean
+                that a certificate is fake.
+
+            </p>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <span>
+            AI Certificate Verification System
+        </span>
+
+        <span>
+            © 2026 CertiVerify
+        </span>
+
+    </footer>
+
+
+    <!-- =====================================================
+         SCORE ANIMATION
+    ====================================================== -->
+
+    <script>
+
+        const score =
+            parseFloat("{{ result.score or 0 }}");
+
+
+        const scoreElement =
+            document.getElementById("score");
+
+
+        const circleScore =
+            document.getElementById("circleScore");
+
+
+        const progressCircle =
+            document.getElementById("progressCircle");
+
+
+        const radius = 60;
+
+
+        const circumference =
+            2 * Math.PI * radius;
+
+
+        progressCircle.style.strokeDasharray =
+            circumference;
+
+
+        progressCircle.style.strokeDashoffset =
+            circumference;
+
+
+        let currentScore = 0;
+
+
+        const duration = 1200;
+
+
+        const startTime =
+            performance.now();
+
+
+        function animateScore(currentTime) {
+
+
+            const elapsed =
+                currentTime - startTime;
+
+
+            const progress =
+                Math.min(
+                    elapsed / duration,
+                    1
+                );
+
+
+            currentScore =
+                Math.floor(
+                    score * progress
+                );
+
+
+            scoreElement.textContent =
+                currentScore;
+
+
+            circleScore.textContent =
+                currentScore;
+
+
+            const offset =
+                circumference -
+                (
+                    currentScore / 100
+                ) * circumference;
+
+
+            progressCircle.style.strokeDashoffset =
+                offset;
+
+
+            if (progress < 1) {
+
+                requestAnimationFrame(
+                    animateScore
+                );
+
+            } else {
+
+                scoreElement.textContent =
+                    score.toFixed(2);
+
+                circleScore.textContent =
+                    score.toFixed(2);
+
+            }
+
+        }
+
+
+        requestAnimationFrame(
+            animateScore
+        );
+
+    </script>
+
+
+</body>
+
+</html>
